@@ -1,12 +1,22 @@
 from fastapi import FastAPI, Depends
-
+from starlette.middleware.cors import CORSMiddleware
 
 from models.models import Product
 from database import database_models
 from database.db import session, engine
 from sqlalchemy.orm import Session
-app = FastAPI()   # this is fastapi object after import
+app = FastAPI()# this is fastapi object after import
 
+# for cors permission
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+
+    
+)
 database_models.Base.metadata.create_all(engine)
 
 
